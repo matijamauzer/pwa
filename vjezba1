@@ -1,0 +1,25 @@
+<?php
+$naslov = "Moj prvi PHP dokument";
+$autor = "Matija Mauzer";
+?>
+
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+<?php
+echo "<h1>$naslov</h1>";
+
+echo "<p>Ovu stranicu izradio/la je <strong>$autor</strong>.</p>";
+
+echo '<a href="https://www.index.hr" target="_blank">
+Posjeti INDEX.HR
+</a>';
+?>
+
+</body>
+</html>
+<!-- vjezba1.php -->
