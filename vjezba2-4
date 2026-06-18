@@ -1,0 +1,62 @@
+<?php
+$naslov = "Izračun varijable c";
+$ime    = "Matija Mauzer";
+ 
+$a = $b = $c = null;
+$prikaziRezultat = false;
+ 
+if (isset($_GET['a']) && isset($_GET['b']) && $_GET['a'] !== '' && $_GET['b'] !== '') {
+    $a = (float)$_GET['a'];
+    $b = (float)$_GET['b'];
+    $c = (3 * $a - $b) / 2;
+    $prikaziRezultat = true;
+}
+?>
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><?php echo htmlspecialchars($naslov); ?></title>
+  <style>
+    :root { --pozadina:#0f172a; --blok:#ffffff; --text:#111827; --muted:#6b7280; --naglasak:#2563eb; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+           background:var(--pozadina); color:var(--text); }
+    .sadrzaj { max-width:720px; margin:48px auto; background:var(--blok); padding:32px;
+               border-radius:16px; box-shadow:0 10px 30px rgba(0,0,0,.08); }
+    h1 { margin:0 0 12px; font-size:2rem; }
+    p  { margin:0 0 14px; line-height:1.6; }
+    label { display:block; margin-bottom:8px; }
+    input[type="text"] { padding:6px 10px; border:1px solid #d1d5db; border-radius:8px;
+                         font-size:1rem; width:220px; margin-left:8px; }
+    .gumb { display:inline-block; padding:10px 16px; border:1px solid var(--naglasak);
+            border-radius:10px; text-decoration:none; margin-top:12px; margin-right:8px;
+            background:none; color:var(--naglasak); font-size:1rem; cursor:pointer; }
+    .gumb:hover { background:var(--naglasak); color:#fff; }
+    .rezultat { margin-top:20px; padding:16px; background:#f0f4ff; border-radius:10px;
+                border-left:4px solid var(--naglasak); font-size:1.1rem; }
+    footer { margin-top:20px; font-size:.9rem; color:var(--muted); }
+  </style>
+</head>
+<body>
+  <main class="sadrzaj">
+    <h1><?php echo htmlspecialchars($naslov); ?></h1>
+    <p>Ovu stranicu izradio/la je <strong><?php echo htmlspecialchars($ime); ?></strong>.</p>
+    <p>Formula: <strong>c = (3a – b) / 2</strong></p>
+ 
+    <form method="GET" action="formula.php">
+      <label>Vrijednost a: <input type="text" name="a" value="<?php echo isset($_GET['a']) ? htmlspecialchars($_GET['a']) : ''; ?>"></label>
+      <label>Vrijednost b: <input type="text" name="b" value="<?php echo isset($_GET['b']) ? htmlspecialchars($_GET['b']) : ''; ?>"></label>
+      <button type="submit" class="gumb">Pošalji</button>
+    </form>
+ 
+    <?php if ($prikaziRezultat): ?>
+      <div class="rezultat">
+        c = (3 × <?php echo $a; ?> – <?php echo $b; ?>) / 2 = <strong><?php echo $c; ?></strong>
+      </div>
+    <?php endif; ?>
+  </main>
+</body>
+</html>
+<!-- Formula.php -->
