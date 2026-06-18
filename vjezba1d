@@ -1,0 +1,113 @@
+<?php
+$naslov = "PHP dokument — vježba 1d";
+$ime    = "Matija Mauzer";
+$opis   = "Ova stranica nastavlja vježbu 1c i prikazuje formu s izborom teme i slike.";
+
+$tema       = isset($_GET['tema'])  ? $_GET['tema']  : 'dark';
+$slikaKey   = isset($_GET['slika']) ? $_GET['slika'] : 'php';
+$prikaziOpis = isset($_GET['opis']);
+
+$teme   = ['dark', 'light'];
+$slike  = ['php' => 'img/wrc.jpeg', 'server' => 'img/f1.jpg', 'code' => 'img/code.jpg'];
+
+if (!in_array($tema, $teme))       $tema     = 'dark';
+if (!array_key_exists($slikaKey, $slike)) $slikaKey = 'php';
+
+$slikaPath = $slike[$slikaKey];
+
+if ($tema === 'dark') {
+    $bgBoja    = '#0f172a';
+    $blokBoja  = '#ffffff';
+    $textBoja  = '#111827';
+} else {
+    $bgBoja    = '#f1f5f9';
+    $blokBoja  = '#ffffff';
+    $textBoja  = '#111827';
+}
+?>
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><?php echo htmlspecialchars($naslov); ?></title>
+  <meta name="description" content="Četvrti PHP dokument s formom i slikom.">
+  <style>
+    :root {
+      --pozadina: <?php echo $bgBoja; ?>;
+      --blok:     <?php echo $blokBoja; ?>;
+      --text:     <?php echo $textBoja; ?>;
+      --muted:    #6b7280;
+      --naglasak: #2563eb;
+    }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+           background:var(--pozadina); color:var(--text); }
+    .sadrzaj { max-width:720px; margin:48px auto; background:var(--blok); padding:32px;
+               border-radius:16px; box-shadow:0 10px 30px rgba(0,0,0,.08); }
+    h1 { margin:0 0 12px; font-size:2rem; }
+    p  { margin:0 0 14px; line-height:1.6; }
+    img { max-width:180px; display:block; margin:0 0 20px; border-radius:8px; }
+    form { margin:20px 0; }
+    fieldset { border:1px solid #e5e7eb; border-radius:10px; padding:16px; margin-bottom:16px; }
+    legend { font-weight:600; padding:0 6px; }
+    label { display:block; margin-bottom:8px; cursor:pointer; }
+    select { padding:6px 10px; border:1px solid #d1d5db; border-radius:8px; font-size:1rem; }
+    .gumb { display:inline-block; padding:10px 16px; border:1px solid var(--naglasak);
+            border-radius:10px; text-decoration:none; margin-right:8px;
+            background:none; color:var(--naglasak); font-size:1rem; cursor:pointer; }
+    .gumb:hover { background:var(--naglasak); color:#fff; }
+    footer { margin-top:20px; font-size:.9rem; color:var(--muted); }
+  </style>
+</head>
+<body>
+  <main class="sadrzaj">
+    <h1><?php echo htmlspecialchars($naslov); ?></h1>
+    <p>Ovu stranicu izradio/la je <strong><?php echo htmlspecialchars($ime); ?></strong>.</p>
+
+    <img src="<?php echo htmlspecialchars($slikaPath); ?>"
+         alt="<?php echo htmlspecialchars($slikaKey); ?>">
+
+    <?php if ($prikaziOpis): ?>
+      <p><?php echo htmlspecialchars($opis); ?></p>
+    <?php endif; ?>
+
+    <form method="GET" action="vjezba1d.php">
+
+      <fieldset>
+        <legend>Tema</legend>
+        <label>
+          <input type="radio" name="tema" value="dark"
+            <?php echo $tema === 'dark' ? 'checked' : ''; ?>> Tamna
+        </label>
+        <label>
+          <input type="radio" name="tema" value="light"
+            <?php echo $tema === 'light' ? 'checked' : ''; ?>> Svjetla
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Slika</legend>
+        <select name="slika">
+          <option value="php"    <?php echo $slikaKey === 'php'    ? 'selected' : ''; ?>>PHP</option>
+          <option value="server" <?php echo $slikaKey === 'server' ? 'selected' : ''; ?>>Server</option>
+          <option value="code"   <?php echo $slikaKey === 'code'   ? 'selected' : ''; ?>>Kod</option>
+        </select>
+      </fieldset>
+
+      <fieldset>
+        <legend>Opis</legend>
+        <label>
+          <input type="checkbox" name="opis"
+            <?php echo $prikaziOpis ? 'checked' : ''; ?>> Prikaži opis stranice
+        </label>
+      </fieldset>
+
+      <button type="submit" class="gumb">Primijeni odabir</button>
+      <a class="gumb" href="vjezba1c.php">Natrag na vježba 1c</a>
+
+    </form>
+  </main>
+</body>
+</html>
+<!-- Vjezba1d.php -->
